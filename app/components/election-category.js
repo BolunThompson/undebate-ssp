@@ -14,6 +14,7 @@ import {
     SvgSent,
     SvgVideoSubmitted,
 } from './lib/svg'
+import ProgressBar from './progress-bar'
 
 const statusInfoEnum = {
     completed: { icon: <SvgCompleted /> },
@@ -34,11 +35,6 @@ const statusInfoEnum = {
     declined: { icon: <SvgDeclined />, text: 'Declined' },
     sent: { icon: <SvgSent />, text: 'Sent' },
     locked: { icon: <SvgLock /> },
-}
-
-function ProgressBar(props) {
-    const classes = useStyles(props)
-    return <div className={classes.progressBar} />
 }
 
 function ElectionCategory(props) {
@@ -202,15 +198,6 @@ const useStyles = createUseStyles(theme => ({
     tableItem: {
         textAlign: 'center',
         padding: '0px .2rem',
-    },
-    progressBar: props => {
-        const { percentDone } = props
-        return {
-            background: `linear-gradient(to right, ${theme.colorPrimary} ${percentDone}%, #FFFFFF 0%)`,
-            width: '100%',
-            height: '1em',
-            borderRadius: theme.defaultBorderRadius,
-        }
     },
 }))
 
