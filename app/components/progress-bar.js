@@ -2,9 +2,9 @@ import React from 'react'
 import { createUseStyles } from 'react-jss'
 
 export default function ProgressBar(props) {
-    const { className, percentDone } = props
+    const { className, style, percentDone } = props
     const classes = useStyles(props)
-    return <progress value={percentDone / 100} className={`${classes.progressBar} ${className}`} />
+    return <progress value={percentDone / 100} className={`${classes.progressBar} ${className}`} style={style} />
 }
 
 const useStyles = createUseStyles(theme => ({
