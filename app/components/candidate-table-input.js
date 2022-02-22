@@ -2,8 +2,9 @@
 // example code thanks to https://react-table.tanstack.com/docs/examples/editable-data
 import React, { useRef } from 'react'
 import { createUseStyles } from 'react-jss'
-import { useTable, usePagination } from 'react-table'
+import { useTable, usePagination, useSortBy } from 'react-table'
 import ObjectID from 'isomorphic-mongo-objectid'
+import { SvgBlackDownArrow } from './lib/svg'
 
 // Create an editable cell renderer
 function EditableCell({
@@ -74,6 +75,7 @@ function Table({ columns, data, updateMyData, skipPageReset }) {
             updateMyData,
             initialState: { pageSize: 100 },
         },
+        useSortBy,
         usePagination
     )
     const classes = useStyles()
@@ -85,7 +87,14 @@ function Table({ columns, data, updateMyData, skipPageReset }) {
                     {headerGroups.map(headerGroup => (
                         <tr {...headerGroup.getHeaderGroupProps()}>
                             {headerGroup.headers.map(column => (
-                                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                                    {column.render('Header')}
+                                    <SvgBlackDownArrow
+                                        className={`${classes.sortSvg}
+                                        ${column.isSorted ? '' : classes.invisible}
+                                        ${column.isSortedDesc ? '' : classes.flipSvg}`}
+                                    />
+                                </th>
                             ))}
                         </tr>
                     ))}
@@ -292,4 +301,7 @@ const useStyles = createUseStyles(theme => ({
     pagination: {
         padding: '0.5rem',
     },
+    sortArrow: { opacity: 0.5 },
+    flipSvg: { transform: 'rotate(180deg)' },
+    invisible: { visibility: 'hidden' },
 }))
